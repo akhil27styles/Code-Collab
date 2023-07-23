@@ -1,0 +1,42 @@
+.homePageWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    height: 100vh;
+  }
+  
+  .formWrapper {
+    background: #282a36;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+  }
+  
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .mainLabel {
+    margin-bottom: 20px;
+    margin-top: 0;
+  }
+  
+  .homePageLogo {
+    height: 80px;
+    margin-bottom: 30px;
+  }
+  
+  .inputBox {
+    padding: 10px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    margin-bottom: 14px;
+    background: #eee;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
