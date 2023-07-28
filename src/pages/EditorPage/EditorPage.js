@@ -1,11 +1,12 @@
 import React,{useState} from 'react'
 import Client from '../../components/Client';
-import Editor from '../../components/editor';
+import Ide from '../../components/Ide';
+
 
 const EditorPage = () => {
   const [clients, setclients] = useState([
     {socketId:1,username:'Akhil'},
-    {socketId:1,username:'Akhil'}]);
+    {socketId:2,username:'Akhil'}]);
   return (
     <div className='mainWrap'>
       <div className='aside'>
@@ -24,7 +25,7 @@ const EditorPage = () => {
         <button className='btn leaveBtn'>LEAVE BUTTON</button>
       </div>
       <div className='edtiroWrap'>
-        <Editor/>
+        <Ide/>
       </div>
     </div>
   )
