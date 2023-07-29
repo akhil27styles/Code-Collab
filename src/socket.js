@@ -7,4 +7,5 @@ export const initSocket=async()=>{
         transports:['websocket'],
     };
     return io(process.env.REACT_APP_BACKEND_URL,options);
+    //create a .env file and give REACT_APP_BACKEND_URL as 5000 PORT 
 };
