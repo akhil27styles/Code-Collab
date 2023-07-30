@@ -108,7 +108,7 @@ const Ide = () => {
             "Ctrl-Space": "autocomplete",
           },
         }}
-        extensions={[autocompletion({ override: [myCompletions] })]}
+        // extensions={[autocompletion({ override: [myCompletions] })]}
       />
     </div>
   );
