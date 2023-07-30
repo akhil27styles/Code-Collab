@@ -24,6 +24,13 @@ io.on('connection',(socket)=>{
 
     socket.on(ACTIONS.JOIN,({roomId,username})=>{
 
+      // check to Don't add same username again 
+      const existingSocketId = Object.keys(userSocketMap).find(
+      (socketId) => userSocketMap[socketId] === username);
+      if(existingSocketId){
+        return;
+       }
+
      userSocketMap[socket.id]=username;
      socket.join(roomId);
      const clients=getAllConnectedClients(roomId);

@@ -75,6 +75,9 @@ const EditorPage = () => {
         console.error(err);
     }
 }
+function leaveRoom(){
+  reactNavigator('/');
+}
 
    if(!location.state){
     return <Navigate to="/" />
@@ -94,7 +97,7 @@ const EditorPage = () => {
           </div>
         </div>
         <button className='btn copyBtn' onClick={copyRoomId}>SHARE ROOM INVITE</button>
-        <button className='btn leaveBtn'>LEAVE BUTTON</button>
+        <button className='btn leaveBtn' onClick={leaveRoom}>LEAVE BUTTON</button>
       </div>
       <div className='edtiroWrap'>
         <Ide/>
