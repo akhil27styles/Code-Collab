@@ -8,6 +8,7 @@ import { toast } from 'react-hot-toast';
 
 const EditorPage = () => {
   const socketRef=useRef(null);
+  const codeRef=useRef(null);
   const location=useLocation();
   const {roomId}=useParams();
 
@@ -100,7 +101,7 @@ function leaveRoom(){
         <button className='btn leaveBtn' onClick={leaveRoom}>LEAVE BUTTON</button>
       </div>
       <div className='edtiroWrap'>
-        <Ide/>
+        <Ide socketRef={ socketRef} roomId={roomId}/>
       </div>
     </div>
   )
