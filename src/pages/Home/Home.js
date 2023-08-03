@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import i18n from '../../constants/en';
 const Home = () => {
   const navigate=useNavigate();
   const [roomId,setRoomid]=useState('');
@@ -34,7 +35,7 @@ const Home = () => {
     <div className='homePageWrapper'>
         <div className='formWrapper'>
             <img src="/" className="homePageLogo" alt="code-collab"/>
-            <h4 className='mainLabel'>Paste invitation Room Id</h4>
+            <h4 className='mainLabel'>{i18n.pasteInvitationRoomId}</h4>
             <div className='inputGroup'>
                <input type="text" className='inputBox' 
                 placeholder='ROOM ID' 
@@ -46,9 +47,9 @@ const Home = () => {
                  onChange={(e)=>setusername(e.target.value)}
                  value={username}
                  onKeyUp={handleInputEnter}/>
-               <button className='btn joinBtn' onClick={joinRoom}>Join</button>
-               <span className='createInfo'>If you don't have an invite then create &nbsp;
-               <Link onClick={createNewRoom}  className='createNewBtn'>new room</Link>
+               <button className='btn joinBtn' onClick={joinRoom}>{i18n.join}</button>
+               <span className='createInfo'>{i18n.createNewRoom} &nbsp;
+               <Link onClick={createNewRoom}  className='createNewBtn'>{i18n.newroom}</Link>
                </span>
             </div>
         </div>
