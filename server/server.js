@@ -43,6 +43,13 @@ io.on('connection',(socket)=>{
         });
      });
  });
+ 
+  //code change
+  socket.on(ACTIONS.CODE_CHANGE,({roomId,code})=>{
+    console.log(code); // i am getting code on console
+    socket.in(roomId).emit(ACTIONS.CODE_CHANGE,{code});
+  })
+
 
   socket.on('disconnecting',()=>{
     const rooms=[...socket.rooms];
