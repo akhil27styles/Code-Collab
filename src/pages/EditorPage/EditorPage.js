@@ -42,6 +42,11 @@ const EditorPage = () => {
           }
           console.log(clients);
           setclients(clients);
+          
+          socketRef.current.emit(ACTIONS.SYNC_CODE,{
+            code:codeRef.current,
+            socketId,
+          })
         }
       );
       
@@ -50,7 +55,7 @@ const EditorPage = () => {
         ACTIONS.DISCONNECTED,({socketId,username})=>{
           toast.success(`${username} left the room`);
           setclients((prev)=>{
-            return prev.filter(client=>client.socketId!==socketId);
+            return prev.filter((client)=>client.socketId!==socketId);
           })
         }
       );
@@ -59,9 +64,9 @@ const EditorPage = () => {
 
     return ()=>{
       //cleaning when component unmount
-      socketRef.current?.disconnect();
       socketRef.current?.off(ACTIONS.JOINED);
       socketRef.current?.off(ACTIONS.DISCONNECTED);
+      socketRef.current?.disconnect();
     };
   },[]);
 
@@ -101,7 +106,9 @@ function leaveRoom(){
         <button className='btn leaveBtn' onClick={leaveRoom}>{i18n.leaveButton}</button>
       </div>
       <div className='edtiroWrap'>
-        <Ide socketRef={ socketRef} roomId={roomId}/>
+        <Ide socketRef={ socketRef} roomId={roomId} onCodeChange={(code) => {
+                        codeRef.current = code;
+                    }}/>
       </div>
     </div>
   )

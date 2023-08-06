@@ -49,7 +49,8 @@ const Home = () => {
                  onKeyUp={handleInputEnter}/>
                <button className='btn joinBtn' onClick={joinRoom}>{i18n.join}</button>
                <span className='createInfo'>{i18n.createNewRoom} &nbsp;
-               <Link onClick={createNewRoom}  className='createNewBtn'>{i18n.newroom}</Link>
+               <a onClick={createNewRoom}  href=""
+               className='createNewBtn'>{i18n.newroom}</a>
                </span>
             </div>
         </div>

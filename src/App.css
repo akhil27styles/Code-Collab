@@ -91,7 +91,16 @@ footer a:hover {
 
 .mainWrap {
   display: grid;
-  grid-template-columns: 230px 1fr;
+  grid-template-columns: 180px 1fr;
+  height: 100vh;
+}
+
+@media screen and (min-width: 480px) {
+  .mainWrap {
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      height: 100vh;
+  }
 }
 
 .aside {
@@ -100,12 +109,8 @@ footer a:hover {
   color: #fff;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
 }
-.edtiroWrap{
-  overflow-y: scroll;
-  height: 600px;
-}
+
 .asideInner {
   flex: 1;
 }
@@ -123,6 +128,7 @@ footer a:hover {
   flex-direction: column;
   font-weight: bold;
 }
+
 .userName {
   margin-top: 10px;
 }
@@ -136,16 +142,66 @@ footer a:hover {
   height: 60px;
 }
 
+.seLang{
+  border: none;
+  width: 100%;
+  margin-top: 4px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align-last: center;
+}
+
 .leaveBtn {
   width: 100%;
   margin-top: 20px;
 }
+
 .CodeMirror {
   min-height: calc(100vh - 20px);
-  font-size: 20px;
+  width: calc(100vw - 180px);
+  font-size: 16px;
   line-height: 1.6;
   padding-top: 20px;
 }
 
-
+@media screen and (min-width: 480px) {
+  .CodeMirror {
+      min-height: calc(100vh - 20px);
+      width: calc(100vw - 230px);
+      font-size: 16px;
+      line-height: 1.6;
+      padding-top: 20px;
+  }
+}
 /* Ide */
+
+/* Header */
+.header{
+  background: #1c1e29;
+  padding:5px;
+  display: flex;
+  border-bottom-right-radius:20px ;
+  border-bottom-left-radius:20px ;
+    width: 100%;
+  margin: 0 auto;
+}
+.custom-file-input input[type='file'] {
+  display: none;
+}
+
+.custom-file-input {
+  display: inline-block;
+  background-color: #4aee88;
+  color: black;
+  padding: 8px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Optional: Add some styles to make it look like a button */
+.custom-file-input:hover {
+  background-color: #e2e2e2;
+}

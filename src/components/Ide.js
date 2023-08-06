@@ -6,64 +6,87 @@ import 'codemirror/mode/javascript/javascript';
 import 'codemirror/addon/edit/closetag';
 import 'codemirror/addon/edit/closebrackets';
 import ACTIONS from '../constants/Actions';
+import Header from './Header';
 
-const Ide = ({ socketRef, roomId }) => {
-  const [editor, setEditor] = useState(null);
-  const [receivedCode, setReceivedCode] = useState(null); // Separate variable for received code
+const Ide = ({ socketRef, roomId ,onCodeChange}) => {
+
+  const editorRef = useRef(null);
 
   useEffect(() => {
     async function init() {
-      const newEditor = Codemirror.fromTextArea(
-        document.getElementById('realtimeEditor'),
-        {
-          mode: { name: 'javascript', json: true },
-          theme: 'dracula',
-          autoCloseTags: true,
-          autoCloseBrackets: true,
-          lineNumbers: true,
-        }
-      );
-      setEditor(newEditor);
+        editorRef.current = Codemirror.fromTextArea(
+            document.getElementById('realtimeEditor'),
+            {
+                mode: { name: 'javascript', json: true },
+                theme: 'dracula',
+                autoCloseTags: true,
+                autoCloseBrackets: true,
+                lineNumbers: true,
+            }
+        );
+
+        editorRef.current.on('change', (instance, changes) => {
+            const { origin } = changes;
+            const code = instance.getValue();
+            onCodeChange(code);
+            if (origin !== 'setValue') {
+                socketRef.current.emit(ACTIONS.CODE_CHANGE, {
+                    roomId,
+                    code,
+                });
+            }
+        });
+
     }
     init();
-  }, []);
+}, []);
 
-  useEffect(() => {
-    if (editor) {
-      editor.on('change', (instance, changes) => {
-        const { origin } = changes;
-        const code = instance.getValue(); // Getting all the code
-        if (origin !== 'setValue') {
-          socketRef.current.emit(ACTIONS.CODE_CHANGE, {
-            roomId,
-            code,
-          });
-          console.log(code); // Here you should see the code on the console
-        }
-      });
-    }
-  }, [editor]);
 
-  useEffect(() => {
-    if (socketRef.current) {
+useEffect(() => {
+  console.log(socketRef.current);
+  if (socketRef.current) {
       socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
-        if (code != null) {
-          console.log(code); // Here you should see the code on the console
-          console.log(editor); // Here you should see the editor instance on the console
-          setReceivedCode(code); // Store the received code in the separate state variable
-        }
+          if (code !== null) {
+              editorRef.current.setValue(code);
+          }
       });
-    }
-  }, [socketRef.current]);
+  }
 
-  // Update the editor value when receivedCode changes
-  useEffect(() => {
-    if (editor && receivedCode !== null) {
-      editor.setValue(receivedCode);
-    }
-  }, [editor, receivedCode]);
+  return () => {
+      if (socketRef.current) {
+          socketRef.current.off(ACTIONS.CODE_CHANGE);
+      }
+  };
+}, [socketRef.current]);
 
-  return <textarea id="realtimeEditor"></textarea>;
+const handleFileUpload = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const fileContent = e.target.result;
+      editorRef.current.setValue(fileContent);
+      socketRef.current.emit(ACTIONS.CODE_CHANGE, {
+        roomId,
+        code: fileContent,
+      });
+    };
+    reader.readAsText(file);
+  }
+};
+
+
+  return (
+  <>
+    <div className='header'>
+    <label className="custom-file-input">
+      <input type="file" onChange={handleFileUpload} />
+      upload a File...
+    </label>
+    </div>
+  <textarea id="realtimeEditor"></textarea>
+  </>
+  );
 };
 
 export default Ide;
