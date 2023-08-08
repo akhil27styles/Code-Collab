@@ -1,91 +1,95 @@
-import React, { useEffect, useRef, useState } from "react";
-import Codemirror from "codemirror";
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/dracula.css";
-import "codemirror/mode/javascript/javascript";
-import "codemirror/addon/edit/closetag";
-import "codemirror/addon/edit/closebrackets";
-import ACTIONS from "../constants/Actions";
-import Header from "./Header";
+import React, { useEffect, useRef, useState } from 'react';
+import Codemirror from 'codemirror';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/dracula.css';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/addon/edit/closetag';
+import 'codemirror/addon/edit/closebrackets';
+import ACTIONS from '../constants/Actions';
+import Header from './Header';
 
-const Ide = ({ socketRef, roomId, onCodeChange }) => {
+const Ide = ({ socketRef, roomId ,onCodeChange}) => {
+
   const editorRef = useRef(null);
-  async function init() {
-    editorRef.current = Codemirror.fromTextArea(
-      document.getElementById("realtimeEditor"),
-      {
-        mode: { name: "javascript", json: true },
-        theme: "dracula",
-        autoCloseTags: true,
-        autoCloseBrackets: true,
-        lineNumbers: true,
-        showCursorWhenSelecting: true,
-        scrollbarStyle: "native",
-      }
-    );
 
-    editorRef.current.on("change", (instance, changes) => {
-      const { origin } = changes;
-      const code = instance.getValue();
-      onCodeChange(code);
-      if (origin !== "setValue") {
-        socketRef.current.emit(ACTIONS.CODE_CHANGE, {
-          roomId,
-          code,
+  useEffect(() => {
+    async function init() {
+      console.log('created');
+
+        editorRef.current = Codemirror.fromTextArea(
+            document.getElementById('realtimeEditor'),
+            {
+                mode: { name: 'javascript', json: true },
+                theme: 'dracula',
+                autoCloseTags: true,
+                autoCloseBrackets: true,
+                lineNumbers: true,
+            }
+        );
+        editorRef.current.on('change', (instance, changes) => {
+            const { origin } = changes;
+            const code = instance.getValue();
+            onCodeChange(code);
+            if (origin !== 'setValue') {
+                socketRef.current.emit(ACTIONS.CODE_CHANGE, {
+                    roomId,
+                    code,
+                });
+            }
         });
+  }
+    return () => {
+      if(!editorRef.current){
+      init();
       }
-    });
+    }
+}, []);
+
+
+useEffect(() => {
+  console.log(socketRef.current);
+  if (socketRef.current) {
+      socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
+          if (code !== null) {
+              editorRef.current.setValue(code);
+          }
+      });
   }
 
-  useEffect(() => {
-    return () => {
-      init();
-    };
-  }, []);
-
-  useEffect(() => {
-    console.log(socketRef.current);
-    if (socketRef.current) {
-      socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
-        if (code !== null) {
-          editorRef.current.setValue(code);
-        }
-      });
-    }
-
-    return () => {
+  return () => {
       if (socketRef.current) {
-        socketRef.current.off(ACTIONS.CODE_CHANGE);
+          socketRef.current.off(ACTIONS.CODE_CHANGE);
       }
-    };
-  }, [socketRef.current]);
-
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const fileContent = e.target.result;
-        editorRef.current.setValue(fileContent);
-        socketRef.current.emit(ACTIONS.CODE_CHANGE, {
-          roomId,
-          code: fileContent,
-        });
-      };
-      reader.readAsText(file);
-    }
   };
+}, [socketRef.current]);
+
+const handleFileUpload = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const fileContent = e.target.result;
+      editorRef.current.setValue(fileContent);
+      socketRef.current.emit(ACTIONS.CODE_CHANGE, {
+        roomId,
+        code: fileContent,
+      });
+    };
+    reader.readAsText(file);
+  }
+};
+
 
   return (
-    <>
-      <div className="header">
-        <label className="custom-file-input">
-          <input type="file" onChange={handleFileUpload} />
-          upload a File...
-        </label>
-      </div>
-      <textarea id="realtimeEditor"></textarea>
-    </>
+  <>
+    <div className='header'>
+    <label className="custom-file-input">
+      <input type="file" onChange={handleFileUpload} />
+      upload a File...
+    </label>
+    </div>
+  <textarea id="realtimeEditor"></textarea>
+  </>
   );
 };
 
