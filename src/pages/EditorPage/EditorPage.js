@@ -89,12 +89,15 @@ function leaveRoom(){
     return <Navigate to="/" />
    }
   return (
+    <>
     <div className='mainWrap'>
+      <div className='edtiroWrap'>
+        <Ide socketRef={ socketRef} roomId={roomId} onCodeChange={(code) => {
+                        codeRef.current = code;
+                    }}/>
+        </div>
       <div className='aside'>
         <div className='asideInner'>
-          <div className='logo'>
-            <img className='logoImage' src="" alt="logo"/>
-          </div>
           <h3>Connected</h3>
           <div className='clientList'>
               {clients.map((client)=>(
@@ -102,15 +105,13 @@ function leaveRoom(){
               ))}
           </div>
         </div>
+        <div className="button-container">
         <button className='btn copyBtn' onClick={copyRoomId}>{i18n.shareRoomInvite}</button>
         <button className='btn leaveBtn' onClick={leaveRoom}>{i18n.leaveButton}</button>
       </div>
-      <div className='edtiroWrap'>
-        <Ide socketRef={ socketRef} roomId={roomId} onCodeChange={(code) => {
-                        codeRef.current = code;
-                    }}/>
       </div>
     </div>
+    </>
   )
 }
 

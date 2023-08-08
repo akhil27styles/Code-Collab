@@ -14,8 +14,6 @@ const Ide = ({ socketRef, roomId ,onCodeChange}) => {
 
   useEffect(() => {
     async function init() {
-      console.log('created');
-
         editorRef.current = Codemirror.fromTextArea(
             document.getElementById('realtimeEditor'),
             {
@@ -24,7 +22,7 @@ const Ide = ({ socketRef, roomId ,onCodeChange}) => {
                 autoCloseTags: true,
                 autoCloseBrackets: true,
                 lineNumbers: true,
-            }
+            },
         );
         editorRef.current.on('change', (instance, changes) => {
             const { origin } = changes;
@@ -88,7 +86,7 @@ const handleFileUpload = (event) => {
       upload a File...
     </label>
     </div>
-  <textarea id="realtimeEditor"></textarea>
+  <textarea className="cm-outer-container" id="realtimeEditor"></textarea>
   </>
   );
 };

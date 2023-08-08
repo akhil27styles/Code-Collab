@@ -70,7 +70,10 @@ footer a {
 .leaveBtn:hover {
   background: #2b824c;
 }
-
+.button-container {
+  display: flex;
+  flex-direction: row;
+}
 .createInfo {
   margin: 0 auto;
   margin-top: 20px;
@@ -89,21 +92,45 @@ footer a:hover {
   border-color: #368654;
 }
 
-.mainWrap {
+/* .mainWrap {
   display: grid;
   grid-template-columns: 180px 1fr;
-  height: 100vh;
+} */
+.mainWrap{
+  display: flex;
+  justify-content: space-between;
 }
 
-@media screen and (min-width: 480px) {
+.aside{
+  margin-top: 65px;
+  border-radius: 20px;
+  background: #1c1e29;
+  color: white;
+  height: 500px;
+  text-align: center;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+.button-container {
+  display: flex; /* Display buttons in a row */
+  margin-top: 10px; /* Add some top margin for spacing */
+}
+.clientList{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+
+/* @media screen and (min-width: 480px) {
   .mainWrap {
       display: grid;
       grid-template-columns: 230px 1fr;
       height: 100vh;
   }
-}
+} */
 
-.aside {
+/* .aside {
   background: #1c1e29;
   padding: 16px;
   color: #fff;
@@ -113,8 +140,11 @@ footer a:hover {
 
 .asideInner {
   flex: 1;
-}
+} */
 
+/* .aside{
+  z-index: 1;
+} */
 .clientsList {
   display: flex;
   align-items: center;
@@ -154,18 +184,6 @@ footer a:hover {
   text-align-last: center;
 }
 
-.leaveBtn {
-  width: 100%;
-  margin-top: 20px;
-}
-
-.CodeMirror {
-  min-height: calc(100vh - 20px);
-  width: calc(100vw - 180px);
-  font-size: 16px;
-  line-height: 1.6;
-  padding-top: 20px;
-}
 
 @media screen and (min-width: 480px) {
   .CodeMirror {
@@ -185,8 +203,6 @@ footer a:hover {
   display: flex;
   border-bottom-right-radius:20px ;
   border-bottom-left-radius:20px ;
-    width: 100%;
-  margin: 0 auto;
 }
 .custom-file-input input[type='file'] {
   display: none;
@@ -204,4 +220,14 @@ footer a:hover {
 /* Optional: Add some styles to make it look like a button */
 .custom-file-input:hover {
   background-color: #e2e2e2;
+}
+
+.CodeMirror{
+  margin: 20px;
+  width: 800px;
+  border-radius: 20px;
+  height: 10%;
+}
+.cm-outer-container {
+height: 10px;
 }
