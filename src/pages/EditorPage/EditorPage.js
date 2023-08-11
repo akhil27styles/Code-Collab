@@ -6,6 +6,7 @@ import ACTIONS from '../../constants/Actions';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
 import { toast } from 'react-hot-toast';
 import i18n from '../../constants/en';
+import Chat from '../../components/Chat';
 const EditorPage = () => {
   const socketRef=useRef(null);
   const codeRef=useRef(null);
@@ -110,6 +111,7 @@ function leaveRoom(){
         <button className='btn leaveBtn' onClick={leaveRoom}>{i18n.leaveButton}</button>
       </div>
       </div>
+      <Chat socketRef={socketRef} clients={clients} roomId={roomId}/>
     </div>
     </>
   )

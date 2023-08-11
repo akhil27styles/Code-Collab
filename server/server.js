@@ -51,7 +51,11 @@ io.on('connection', (socket) => {
     socket.on(ACTIONS.SYNC_CODE, ({ socketId, code }) => {
         io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code });
     });
-
+    socket.on('sendMessage', ({ text, roomId,Username }) => {
+        console.log(text); //geting the resppnse
+      //  socket.emit('receiveMessage',text,Username);
+      io.to(roomId).emit('receiveMessage',  text, Username );
+      });
     socket.on('disconnecting', () => {
         const rooms = [...socket.rooms];
         rooms.forEach((roomId) => {
