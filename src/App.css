@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .homePageWrapper {
   display: flex;
   align-items: center;
@@ -47,6 +51,7 @@ footer a {
   background: #eee;
   font-size: 16px;
   font-weight: bold;
+  color: initial;
 }
 
 .btn {
@@ -96,12 +101,12 @@ footer a:hover {
   display: grid;
   grid-template-columns: 180px 1fr;
 } */
-.mainWrap{
+.mainWrap {
   display: flex;
   justify-content: space-between;
 }
 
-.aside{
+.aside {
   margin-top: 65px;
   border-radius: 20px;
   background: #1c1e29;
@@ -116,11 +121,10 @@ footer a:hover {
   display: flex; /* Display buttons in a row */
   margin-top: 10px; /* Add some top margin for spacing */
 }
-.clientList{
+.clientList {
   display: flex;
   justify-content: space-evenly;
 }
-
 
 /* @media screen and (min-width: 480px) {
   .mainWrap {
@@ -172,7 +176,7 @@ footer a:hover {
   height: 60px;
 }
 
-.seLang{
+.seLang {
   border: none;
   width: 100%;
   margin-top: 4px;
@@ -184,27 +188,26 @@ footer a:hover {
   text-align-last: center;
 }
 
-
 @media screen and (min-width: 480px) {
   .CodeMirror {
-      min-height: calc(100vh - 20px);
-      width: calc(100vw - 230px);
-      font-size: 16px;
-      line-height: 1.6;
-      padding-top: 20px;
+    min-height: calc(100vh - 20px);
+    width: calc(100vw - 230px);
+    font-size: 16px;
+    line-height: 1.6;
+    padding-top: 20px;
   }
 }
 /* Ide */
 
 /* Header */
-.header{
+.header {
   background: #1c1e29;
-  padding:5px;
+  padding: 5px;
   display: flex;
-  border-bottom-right-radius:20px ;
-  border-bottom-left-radius:20px ;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
-.custom-file-input input[type='file'] {
+.custom-file-input input[type="file"] {
   display: none;
 }
 
@@ -222,12 +225,12 @@ footer a:hover {
   background-color: #e2e2e2;
 }
 
-.CodeMirror{
+.CodeMirror {
   margin: 20px;
   width: 800px;
   border-radius: 20px;
   height: 10%;
 }
 .cm-outer-container {
-height: 10px;
+  height: 10px;
 }
