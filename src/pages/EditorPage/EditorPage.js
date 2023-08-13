@@ -7,6 +7,8 @@ import { Navigate, useLocation, useNavigate, useParams } from "react-router";
 import { toast } from "react-hot-toast";
 import i18n from "../../constants/en";
 import Chat from "../../components/Chat";
+import Navbar from "../../components/Navbar";
+
 const EditorPage = () => {
   const socketRef = useRef(null);
   const codeRef = useRef(null);
@@ -106,14 +108,14 @@ const EditorPage = () => {
               ))}
             </div>
           </div>
-          <div className="button-container">
+          {/* <div className="button-container">
             <button className="btn copyBtn" onClick={copyRoomId}>
               {i18n.shareRoomInvite}
             </button>
             <button className="btn leaveBtn" onClick={leaveRoom}>
               {i18n.leaveButton}
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
       <Chat socketRef={socketRef} clients={clients} roomId={roomId} />

@@ -20,7 +20,7 @@ const App = () => {
           }}
         ></Toaster>
       </div>
-      <Navbar />
+      {/* <Navbar /> */}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />}></Route>

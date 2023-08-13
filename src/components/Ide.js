@@ -1,40 +1,34 @@
 import React, { useEffect, useRef, useState } from "react";
-import Codemirror from "codemirror";
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/dracula.css";
-import "codemirror/mode/javascript/javascript";
-import "codemirror/addon/edit/closetag";
-import "codemirror/addon/edit/closebrackets";
 import ACTIONS from "../constants/Actions";
-import Header from "./Header";
+import Navbar from "./Navbar";
+import * as monaco from "monaco-editor";
 
+import ThemeDropdown from "./ThemeDropdown";
 const Ide = ({ socketRef, roomId, onCodeChange }) => {
   const editorRef = useRef(null);
-
+  const [theme, setTheme] = useState("vs-dark");
   useEffect(() => {
     async function init() {
-      editorRef.current = Codemirror.fromTextArea(
-        document.getElementById("realtimeEditor"),
-        {
-          mode: { name: "javascript", json: true },
-          theme: "dracula",
-          autoCloseTags: true,
-          autoCloseBrackets: true,
-          lineNumbers: true,
-        }
-      );
-      editorRef.current.on("change", (instance, changes) => {
-        const { origin } = changes;
-        const code = instance.getValue();
-        onCodeChange(code);
-        if (origin !== "setValue") {
-          socketRef.current.emit(ACTIONS.CODE_CHANGE, {
-            roomId,
-            code,
-          });
-        }
+     editorRef.current = monaco.editor.create(document.getElementById("realtimeEditor"), {
+      theme:theme,
+      allowNonTsExtensions: true
+     });
+     console.log(theme)
+     console.log(editorRef.current);
+     editorRef.current.onDidChangeModelContent((event) => {
+      const {changes}=event;
+      console.log(changes[0].text); 
+      const code = editorRef.current.getValue();
+      if(code!=changes[0].text){
+      onCodeChange(code);
+      socketRef.current.emit(ACTIONS.CODE_CHANGE, {
+        roomId,
+        code,
       });
     }
+    });
+
+  }
     return () => {
       if (!editorRef.current) {
         init();
@@ -58,32 +52,23 @@ const Ide = ({ socketRef, roomId, onCodeChange }) => {
       }
     };
   }, [socketRef.current]);
-
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const fileContent = e.target.result;
-        editorRef.current.setValue(fileContent);
-        socketRef.current.emit(ACTIONS.CODE_CHANGE, {
-          roomId,
-          code: fileContent,
-        });
-      };
-      reader.readAsText(file);
-    }
+  const handleThemeChange = (selectedTheme) => {
+    setTheme(selectedTheme);
+    editorRef.current.updateOptions({ theme:selectedTheme });
+    console.log(theme);
+    console.log(selectedTheme);
   };
 
   return (
     <>
-      <div className="m-2 px-2 py-1">
-        <label className="custom-file-input">
-          <input type="file" onChange={handleFileUpload} />
-          upload a File...
-        </label>
+           <Navbar  socketRef={socketRef}
+            roomId={roomId} editorRef={editorRef}/>
+            <div className="flex flex-row">
+        <div className="px-4 py-2">
+          <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
+        </div>
       </div>
-      <textarea className="cm-outer-container" id="realtimeEditor"></textarea>
+        <div  id="realtimeEditor"></div>
     </>
   );
 };
