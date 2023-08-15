@@ -7,6 +7,7 @@ import { Navigate, useLocation, useNavigate, useParams } from "react-router";
 import { toast } from "react-hot-toast";
 import i18n from "../../constants/en";
 import Chat from "../../components/Chat";
+import NewChat from "../../components/NewChat";
 const EditorPage = () => {
   const socketRef = useRef(null);
   const codeRef = useRef(null);
@@ -116,7 +117,7 @@ const EditorPage = () => {
           </div>
         </div>
       </div>
-      <Chat socketRef={socketRef} clients={clients} roomId={roomId} />
+      <NewChat socketRef={socketRef} clients={clients} roomId={roomId} />
     </>
   );
 };
