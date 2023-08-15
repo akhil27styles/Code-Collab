@@ -73,7 +73,7 @@ function NewChat({ socketRef, clients, roomId }) {
           onClick={() => setBoxOpen(true)}
         >
           <div id="chat-overlay"></div>
-          <i className="material-icons">speaker_phone</i>
+          <i className="material-icons" style={{fontSize:"50px"}}>chat</i>
         </div>
       )}
 
@@ -99,7 +99,7 @@ function NewChat({ socketRef, clients, roomId }) {
                     <img
                       src={`https://ui-avatars.com/api/?name=${convertToInitials(
                         msg.Username
-                      )}&size=40&background=4067c2&color=fff`}
+                      )}&size=45&background=4067c2&color=fff`}
                       alt={convertToInitials(msg.Username)}
                     />
                   </span>
@@ -124,10 +124,10 @@ function NewChat({ socketRef, clients, roomId }) {
                   handleSendMessage();
                   scrollBottom();
                 }}
-                class="chat-submit"
+                className="chat-submit"
                 id="chat-submit"
               >
-                <i class="material-icons">send</i>
+                <i className="material-icons">send</i>
               </button>
             </div>
           </div>
