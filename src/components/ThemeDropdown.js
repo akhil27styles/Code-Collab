@@ -1,29 +1,33 @@
 import React from "react";
+import Select from "react-select";
 
 const ThemeDropdown = ({ handleThemeChange, theme }) => {
-    const themes = [
-        "vs",
-        "vs-dark",
-        "hc-black",
-      ];
+  const themes = [
+    "vs-dark",
+    "hc-black",
+    "light",
+  ];
 
-  const handleChange = (event) => {
-    const selectedTheme = event.target.value;
-    console.log(selectedTheme);
-    handleThemeChange(selectedTheme);
+  const options = themes.map(theme => ({
+    value: theme,
+    label: theme,
+  }));
+
+  const handleChange = (selectedOption) => {
+    if (selectedOption) {
+      const selectedTheme = selectedOption.value;
+      console.log(selectedTheme);
+      handleThemeChange(selectedTheme);
+    }
   };
 
   return (
-    <div>
-      <label htmlFor="theme-select">Select Theme:</label>
-      <select id="theme-select" value={theme}  onChange={handleChange}>
-        {themes.map((themeOption) => (
-          <option key={themeOption} value={themeOption}>
-            {themeOption}
-          </option>
-        ))}
-      </select>
-    </div>
+    <Select 
+      placeholder="Select Theme"
+      defaultValue={options[0]} // Use options[0] as the default value
+      options={options} 
+      onChange={handleChange}
+    />
   );
 };
 

@@ -400,3 +400,25 @@ footer a:hover {
   border-radius: 50px;
   margin-left: 20px;
 }
+.Console-area{
+  width: 98%;
+  margin-left: 20px;
+}
+.split-container{
+  display: flex;
+}
+.RunCompile {
+  display: flex;
+  justify-content: space-between;
+  background-color: #3498db; /* Blue color for the button background */
+  color: white; /* White text color for contrast */
+  padding: 8px 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+.RunCompile:hover {
+  background-color: #2980b9; /* Slightly darker blue on hover */
+}
