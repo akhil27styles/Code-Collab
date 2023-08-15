@@ -14,7 +14,7 @@ const EditorPage = () => {
   const codeRef = useRef(null);
   const location = useLocation();
   const { roomId } = useParams();
-
+  const [UsernName, setUsernName] = useState("");
   const reactNavigator = useNavigate();
   const [clients, setclients] = useState([]);
   useEffect(() => {
@@ -43,6 +43,9 @@ const EditorPage = () => {
             toast.success(`${username} joined the room`);
             console.log(`${username} joined`);
           }
+          if(username===location.state?.username){
+            setUsernName(username);
+          }
           console.log(clients);
           setclients(clients);
 
@@ -62,7 +65,6 @@ const EditorPage = () => {
       });
     };
     init();
-
     return () => {
       //cleaning when component unmount
       socketRef.current?.off(ACTIONS.JOINED);
@@ -83,7 +85,6 @@ const EditorPage = () => {
   function leaveRoom() {
     reactNavigator("/");
   }
-
   if (!location.state) {
     return <Navigate to="/" />;
   }
@@ -97,6 +98,7 @@ const EditorPage = () => {
             onCodeChange={(code) => {
               codeRef.current = code;
             }}
+            UsernName={UsernName}
           />
         </div>
         <div className="aside">

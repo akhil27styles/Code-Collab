@@ -3,7 +3,7 @@ import ACTIONS from '../constants/Actions';
 import i18n from '../constants/en';
 import { toast } from "react-hot-toast";
 import {useNavigate} from "react-router";
-const Navbar = ({socketRef,roomId, editorRef}) => {
+const Navbar = ({socketRef,roomId, editorRef,UsernName}) => {
   const reactNavigator = useNavigate();
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -60,6 +60,9 @@ const Navbar = ({socketRef,roomId, editorRef}) => {
       <button className="custom-file-input" onClick={leaveRoom}>
               {i18n.leaveButton}
             </button>
+      </div>
+      <div className='m-2 px-2 py-1'>
+     <span>Welcome {UsernName}</span>
       </div>
             </div>
                </div>

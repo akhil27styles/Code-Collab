@@ -11,7 +11,7 @@ import axios from "axios";
 import { languageOptions } from "../constants/languageOptions";
 import LanguagesDropdown from "./LanguagesDropdown";
 
-const Ide = ({ socketRef, roomId, onCodeChange }) => {
+const Ide = ({ socketRef, roomId, onCodeChange,UsernName }) => {
   console.log(process.env.REACT_APP_RAPID_API_HOST);
   console.log(process.env.REACT_APP_RAPID_API_URL);
   const editorRef = useRef(null);
@@ -156,7 +156,7 @@ console.log(response);
   return (
     <>
            <Navbar  socketRef={socketRef}
-            roomId={roomId} editorRef={editorRef}/>
+            roomId={roomId} editorRef={editorRef} UsernName={UsernName}/>
             <div className="flex flex-row">
               <div className="px-4 py-2">
               <LanguagesDropdown onSelectChange={onSelectChange} />
