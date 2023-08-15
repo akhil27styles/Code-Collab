@@ -7,6 +7,7 @@ const Chat = ({socketRef,clients,roomId}) => {
   const toggleChat = () => {
     setIsOpen((prev) => !prev);
   };
+  const [typingStatus, setTypingStatus] = useState("")
 
   const handleSendMessage = () => {
     if (message.trim() !== '') {
@@ -32,7 +33,6 @@ const Chat = ({socketRef,clients,roomId}) => {
     })
   }
   }, [socketRef.current])
-  
 
   return (
     <div className={`chat-box ${isOpen ? 'expanded' : ''}`}>
@@ -44,6 +44,7 @@ const Chat = ({socketRef,clients,roomId}) => {
       {isOpen && (
         <div className="chat-content">
              {/* here I am not getting the chat messages I send */}
+             <p>{typingStatus}</p>
              <div className='chat-messages-container'>
           <div className='chat-messages'>
           {

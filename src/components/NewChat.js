@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./NewChat.css"; // Import your CSS styles here
-import "./NewChatJS.js"; // Import your CSS styles here
 
 function NewChat({ socketRef, clients, roomId }) {
   const [isOpen, setBoxOpen] = useState(false);

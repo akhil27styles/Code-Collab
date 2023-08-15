@@ -8,12 +8,14 @@ import { toast } from "react-hot-toast";
 import i18n from "../../constants/en";
 import Chat from "../../components/Chat";
 import NewChat from "../../components/NewChat";
+import Navbar from "../../components/Navbar";
+
 const EditorPage = () => {
   const socketRef = useRef(null);
   const codeRef = useRef(null);
   const location = useLocation();
   const { roomId } = useParams();
-
+  const [UsernName, setUsernName] = useState("");
   const reactNavigator = useNavigate();
   const [clients, setclients] = useState([]);
   useEffect(() => {
@@ -42,6 +44,9 @@ const EditorPage = () => {
             toast.success(`${username} joined the room`);
             console.log(`${username} joined`);
           }
+          if(username===location.state?.username){
+            setUsernName(username);
+          }
           console.log(clients);
           setclients(clients);
 
@@ -61,7 +66,6 @@ const EditorPage = () => {
       });
     };
     init();
-
     return () => {
       //cleaning when component unmount
       socketRef.current?.off(ACTIONS.JOINED);
@@ -82,7 +86,6 @@ const EditorPage = () => {
   function leaveRoom() {
     reactNavigator("/");
   }
-
   if (!location.state) {
     return <Navigate to="/" />;
   }
@@ -96,6 +99,7 @@ const EditorPage = () => {
             onCodeChange={(code) => {
               codeRef.current = code;
             }}
+            UsernName={UsernName}
           />
         </div>
         <div className="aside">
@@ -107,14 +111,14 @@ const EditorPage = () => {
               ))}
             </div>
           </div>
-          <div className="button-container">
+          {/* <div className="button-container">
             <button className="btn copyBtn" onClick={copyRoomId}>
               {i18n.shareRoomInvite}
             </button>
             <button className="btn leaveBtn" onClick={leaveRoom}>
               {i18n.leaveButton}
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
       <NewChat socketRef={socketRef} clients={clients} roomId={roomId} />

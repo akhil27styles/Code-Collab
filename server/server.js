@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-
 const http = require('http');
 const path = require('path');
 const { Server } = require('socket.io');
@@ -14,6 +13,8 @@ const io = new Server(server);
 
 
 const userSocketMap = {};
+
+
 function getAllConnectedClients(roomId) {
     // Map
     return Array.from(io.sockets.adapter.rooms.get(roomId) || []).map(
@@ -25,8 +26,6 @@ function getAllConnectedClients(roomId) {
         }
     );
 }
-
-
 
 io.on('connection', (socket) => {
     console.log('socket connected', socket.id);
@@ -53,9 +52,9 @@ io.on('connection', (socket) => {
     });
     socket.on('sendMessage', ({ text, roomId,Username }) => {
         console.log(text); //geting the resppnse
-      //  socket.emit('receiveMessage',text,Username);
       io.to(roomId).emit('receiveMessage',  text, Username );
       });
+      
     socket.on('disconnecting', () => {
         const rooms = [...socket.rooms];
         rooms.forEach((roomId) => {
