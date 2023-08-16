@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .homePageWrapper {
   display: flex;
   align-items: center;
@@ -47,6 +51,7 @@ footer a {
   background: #eee;
   font-size: 16px;
   font-weight: bold;
+  color: initial;
 }
 
 .btn {
@@ -70,7 +75,10 @@ footer a {
 .leaveBtn:hover {
   background: #2b824c;
 }
-
+.button-container {
+  display: flex;
+  flex-direction: row;
+}
 .createInfo {
   margin: 0 auto;
   margin-top: 20px;
@@ -89,21 +97,44 @@ footer a:hover {
   border-color: #368654;
 }
 
-.mainWrap {
+/* .mainWrap {
   display: grid;
   grid-template-columns: 180px 1fr;
-  height: 100vh;
+} */
+.mainWrap {
+  display: flex;
+  justify-content: space-between;
 }
 
-@media screen and (min-width: 480px) {
+.aside {
+  margin-top: 65px;
+  border-radius: 20px;
+  background: #1c1e29;
+  color: white;
+  height: 500px;
+  text-align: center;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+.button-container {
+  display: flex; /* Display buttons in a row */
+  margin-top: 10px; /* Add some top margin for spacing */
+}
+.clientList {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/* @media screen and (min-width: 480px) {
   .mainWrap {
       display: grid;
       grid-template-columns: 230px 1fr;
       height: 100vh;
   }
-}
+} */
 
-.aside {
+/* .aside {
   background: #1c1e29;
   padding: 16px;
   color: #fff;
@@ -113,8 +144,11 @@ footer a:hover {
 
 .asideInner {
   flex: 1;
-}
+} */
 
+/* .aside{
+  z-index: 1;
+} */
 .clientsList {
   display: flex;
   align-items: center;
@@ -142,7 +176,7 @@ footer a:hover {
   height: 60px;
 }
 
-.seLang{
+.seLang {
   border: none;
   width: 100%;
   margin-top: 4px;
@@ -154,41 +188,26 @@ footer a:hover {
   text-align-last: center;
 }
 
-.leaveBtn {
-  width: 100%;
-  margin-top: 20px;
-}
-
-.CodeMirror {
-  min-height: calc(100vh - 20px);
-  width: calc(100vw - 180px);
-  font-size: 16px;
-  line-height: 1.6;
-  padding-top: 20px;
-}
-
 @media screen and (min-width: 480px) {
   .CodeMirror {
-      min-height: calc(100vh - 20px);
-      width: calc(100vw - 230px);
-      font-size: 16px;
-      line-height: 1.6;
-      padding-top: 20px;
+    min-height: calc(100vh - 20px);
+    width: calc(100vw - 230px);
+    font-size: 16px;
+    line-height: 1.6;
+    padding-top: 20px;
   }
 }
 /* Ide */
 
 /* Header */
-.header{
+.header {
   background: #1c1e29;
-  padding:5px;
+  padding: 5px;
   display: flex;
-  border-bottom-right-radius:20px ;
-  border-bottom-left-radius:20px ;
-    width: 100%;
-  margin: 0 auto;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
-.custom-file-input input[type='file'] {
+.custom-file-input input[type="file"] {
   display: none;
 }
 
@@ -204,4 +223,202 @@ footer a:hover {
 /* Optional: Add some styles to make it look like a button */
 .custom-file-input:hover {
   background-color: #e2e2e2;
+}
+
+.CodeMirror {
+  margin: 20px;
+  width: 800px;
+  border-radius: 20px;
+  height: 10%;
+}
+.cm-outer-container {
+  height: 10px;
+}
+
+/* chat */
+/* Chat.css */
+.chat-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 400px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: height 0.3s ease-in-out;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chat-box.expanded {
+  height: 200px;
+}
+
+.chat-icon {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-icon .send-icon {
+  margin-left: 10px;
+  font-size: 18px;
+}
+
+.chat-content {
+  display: flex;
+  padding: 10px;
+}
+.chat-Input {
+  display: flex;
+  margin-top: 80px;
+  margin-left: 150px;
+}
+.chat-message {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.chat-message.sent {
+  justify-content: flex-start; /* Change to flex-start for sent messages */
+}
+
+.chat-message.received {
+  justify-content: flex-end; /* Change to flex-end for received messages */
+  color: red;
+}
+
+.chat-message p {
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 8px;
+  margin: 0;
+}
+
+.chat-message.sent p {
+  background-color: #007bff;
+  color: white;
+}
+
+.chat-messages-container {
+  overflow-y: auto;
+  max-height: 150px; /* Set a maximum height for the scrollable area */
+}
+.chat-user {
+  display: flex;
+}
+/* Add this to your CSS or stylesheets */
+.username {
+  background-color: black;
+  color: white;
+  padding: 2px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-right: 4px;
+}
+
+.message-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.message-input:focus {
+  border-color: #66afe9;
+  outline: none;
+}
+.cloud-icon {
+  font-size: 18px;
+  margin-right: 10px;
+  display: inline-block;
+}
+.send-button {
+  margin-left: 10px;
+  padding: 10px;
+  height: 32px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.send-button:hover {
+  background-color: #555;
+  height: 10px;
+}
+
+/* language */
+
+.language-selector {
+  margin-left: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.language-selector label {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.language-selector select {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.language-selector select:focus {
+  border-color: #2196f3;
+}
+
+.cm-outer-container {
+  width: 100%;
+  height: 400px;
+  font-size: 14px;
+}
+
+#realtimeEditor{
+  height: 400px;
+  width: 900px;
+  border-radius: 50px;
+  margin-left: 20px;
+}
+.Console-area{
+  width: 98%;
+  margin-left: 20px;
+}
+.split-container{
+  display: flex;
+}
+.RunCompile {
+  display: flex;
+  justify-content: space-between;
+  background-color: #3498db; /* Blue color for the button background */
+  color: white; /* White text color for contrast */
+  padding: 8px 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+.RunCompile:hover {
+  background-color: #2980b9; /* Slightly darker blue on hover */
 }
