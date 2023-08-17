@@ -12,8 +12,7 @@ import { languageOptions } from "../constants/languageOptions";
 import LanguagesDropdown from "./LanguagesDropdown";
 
 const Ide = ({ socketRef, roomId, onCodeChange,UsernName }) => {
-  console.log(process.env.REACT_APP_RAPID_API_HOST);
-  console.log(process.env.REACT_APP_RAPID_API_URL);
+  
   const editorRef = useRef(null);
   const [theme, setTheme] = useState("vs-dark");
   const [customInput, setCustomInput] = useState("");

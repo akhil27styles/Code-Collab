@@ -50,13 +50,25 @@ io.on('connection', (socket) => {
     socket.on(ACTIONS.SYNC_CODE, ({ socketId, code }) => {
         io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code });
     });
-    socket.on('sendMessage', ({ text, roomId,Username }) => {
+// ChatMessage
+socket.on('sendMessage', ({ text, roomId,Username }) => {
         console.log(text); //geting the resppnse
       io.to(roomId).emit('receiveMessage',  text, Username );
       });
+socket.on(ACTIONS.OPEN_WHITE_BOARD,({modalOpen,roomId})=>{
+    console.log('moda',modalOpen); //getting true
+    console.log('room',roomId);//getting id
+    io.to(roomId).emit(ACTIONS.WHITE_BOARD_OPENED,{modalOpen:true,roomId});
+})
+
+socket.on(ACTIONS.CLOSE_WHITE_BOARD,({modalOpen,roomId})=>{
+    io.to(roomId).emit(ACTIONS.WHITE_BOARD_OPENED,{modalOpen:false,roomId});
+    console.log('closemoda',modalOpen);//getting undefined
+    console.log('closeroom',roomId);//getting undefined
+})
       
     socket.on('disconnecting', () => {
-        const rooms = [...socket.rooms];
+    const rooms = [...socket.rooms];
         rooms.forEach((roomId) => {
             socket.in(roomId).emit(ACTIONS.DISCONNECTED, {
                 socketId: socket.id,
