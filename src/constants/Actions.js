@@ -12,7 +12,8 @@ const ACTIONS = {
     DRAW_START:'drawStart',
     DRAW_MOVE:'drawMove',
     DRAW_END:'drawEnd',
-    PEN_COLOR_CHANGE:'penColorChange'
+    PEN_COLOR_CHANGE:'penColorChange',
+    CLEAR_CANVAS:'clearCanvas'
 };
 
 module.exports = ACTIONS;
