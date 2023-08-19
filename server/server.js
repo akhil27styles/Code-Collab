@@ -55,6 +55,8 @@ socket.on('sendMessage', ({ text, roomId,Username }) => {
         console.log(text); //geting the resppnse
       io.to(roomId).emit('receiveMessage',  text, Username );
       });
+
+//whiteBoard    
 socket.on(ACTIONS.OPEN_WHITE_BOARD,({modalOpen,roomId})=>{
     console.log('moda',modalOpen); //getting true
     console.log('room',roomId);//getting id
@@ -66,7 +68,34 @@ socket.on(ACTIONS.CLOSE_WHITE_BOARD,({modalOpen,roomId})=>{
     console.log('closemoda',modalOpen);//getting undefined
     console.log('closeroom',roomId);//getting undefined
 })
-      
+
+socket.on(ACTIONS.WHITE_BOARD_SETTINGS, (data) => {
+    const { roomId, pencil, eraser } = data;
+    console.log('setting',data); //getting console
+    io.to(roomId).emit(ACTIONS.WHITE_BOARD_SETTINGS,{ roomId, pencil, eraser});
+  });
+
+  socket.on(ACTIONS.DRAW_START, (data) => {
+    const { roomId, x, y } = data;
+    console.log('start',data); //getting console
+   io.to(roomId).emit(ACTIONS.DRAW_START,{roomId,x,y});
+  });
+  socket.on(ACTIONS.DRAW_MOVE, (data) => {
+    const { roomId, x, y } = data;
+    console.log('move',data); //getting console
+    io.to(roomId).emit(ACTIONS.DRAW_MOVE,{roomId,x,y});
+  });
+
+  socket.on(ACTIONS.DRAW_END, (data) => {
+    const { roomId } = data;
+    console.log('end',data); //getting console
+    io.to(roomId).emit(ACTIONS.DRAW_END,{roomId});
+  });
+  socket.on(ACTIONS.PEN_COLOR_CHANGE,(data)=>{
+    const {roomId, color}=data;
+    console.log('color',data);
+    io.to(roomId).emit(ACTIONS.PEN_COLOR_CHANGE,{roomId,color});
+  })
     socket.on('disconnecting', () => {
     const rooms = [...socket.rooms];
         rooms.forEach((roomId) => {
