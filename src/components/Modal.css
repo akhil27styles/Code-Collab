@@ -33,8 +33,8 @@
   .modalContainer.active {
     transform: translateY(0);
     opacity: 1;
-    width: 100%;
-    height: 70%;
+    width: 80%;
+    height: 80%;
   }
   
   .titleCloseBtn button {
@@ -49,6 +49,26 @@
     text-align: center;
     margin-top: 10px;
   }
-  
-  /* Add more styles as needed for your modal content */
-  
+
+  .backgroundLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 20px,
+      #999 20px,
+      #999 21px
+    ),
+    repeating-linear-gradient(
+      -90deg,
+      transparent,
+      transparent 20px,
+      lightgray 20px,
+      lightgray 21px
+    );
+    pointer-events: none; /* Disable interaction with the background layer */
+  }
