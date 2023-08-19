@@ -49,7 +49,14 @@
     text-align: center;
     margin-top: 10px;
   }
-
+.canvasContainer{
+  display: flex;
+  justify-content: space-around;
+}
+.btn-actions{
+  display: flex;
+  justify-content: space-around;
+}
   .backgroundLayer {
     position: absolute;
     top: 0;

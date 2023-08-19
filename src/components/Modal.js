@@ -6,6 +6,7 @@ const Modal = ({ modalOpen, setmodalOpen, socketRef, roomId }) => {
   const [context, setContext] = useState(null);
   const [drawing, setDrawing] = useState(false);
   const [pencil, setPencil] = useState(true);
+  const [clearCanvas, setClearCanvas] = useState(false);
   const [penColor, setPenColor] = useState('#000000');
   useEffect(() => {
     if (socketRef.current) {
@@ -61,6 +62,7 @@ const Modal = ({ modalOpen, setmodalOpen, socketRef, roomId }) => {
     if (drawing) {
       context.closePath();
       setDrawing(false);
+      setClearCanvas(false);
       if (socketRef.current) {
         socketRef.current.emit(ACTIONS.DRAW_END, { roomId: roomId });
       }
@@ -78,7 +80,17 @@ console.log(newColor);
       socketRef.current.emit(ACTIONS.PEN_COLOR_CHANGE, { roomId, color: newColor });
     }
   };
-
+  const handleCanvasReset = () => {
+    context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    if (socketRef.current) {
+      socketRef.current.emit(ACTIONS.CLEAR_CANVAS, { roomId: roomId });
+    }
+  };
+  
+  const clearDrawingHistory = () => {
+    context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+  };
+  
   const handleClose = () => {
     setmodalOpen(false);
     socketRef.current.emit(ACTIONS.CLOSE_WHITE_BOARD, { modalOpen, roomId });
@@ -139,6 +151,12 @@ console.log(newColor);
               setPenColor(color);
             }
           });
+          socketRef.current.on(ACTIONS.CLEAR_CANVAS, ({ roomId }) => {
+            if (roomId === roomId && context && drawing && canvasRef.current) {
+              clearDrawingHistory();
+              context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+            }
+          });
         }
       }
     }, [canvasRef.current, context, drawing, penColor,roomId, socketRef.current]);
@@ -149,8 +167,7 @@ console.log(newColor);
         <button className="closeButton" onClick={handleClose}>
           Close
         </button>
-        <div className="canvasContainer">
-          <canvas
+        <canvas
             ref={canvasRef}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
@@ -158,7 +175,7 @@ console.log(newColor);
             width={'900px'}
             height={'400px'}
           />
-        </div>
+        <div className="canvasContainer">
         <div className="colorPicker">
           <label htmlFor="color">Pen Color: </label>
           <input
@@ -168,6 +185,12 @@ console.log(newColor);
             onChange={handleColorChange}
           />
         </div>
+        <div className='btn-actions'>
+        <button className="resetButton" onClick={handleCanvasReset}>
+         Reset
+        </button>
+        </div>
+        <div className='pencil-eraser'>
         <button
           className={`modeButton ${pencil ? 'pencilMode' : 'eraserMode'}`}
           onClick={handlePencilEraserToggle}
@@ -182,6 +205,8 @@ console.log(newColor);
             </>
           )}
         </button>
+        </div>
+        </div>
       </div>
     </div>
   );

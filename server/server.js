@@ -96,6 +96,10 @@ socket.on(ACTIONS.WHITE_BOARD_SETTINGS, (data) => {
     console.log('color',data);
     io.to(roomId).emit(ACTIONS.PEN_COLOR_CHANGE,{roomId,color});
   })
+  socket.on(ACTIONS.CLEAR_CANVAS,(data)=>{
+    const {roomId}=data;
+    io.to(roomId).emit(ACTIONS.CLEAR_CANVAS,{roomId});
+  })
     socket.on('disconnecting', () => {
     const rooms = [...socket.rooms];
         rooms.forEach((roomId) => {
