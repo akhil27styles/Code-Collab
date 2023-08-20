@@ -42,13 +42,13 @@ const Ide = ({ socketRef, roomId, onCodeChange,UsernName }) => {
       });
     }
     });
-
   }
-    return () => {
-      if (!editorRef.current) {
-        init();
-      }
-    };
+  init();
+    // return () => {
+    //   if (editorRef.current) {
+    //       editorRef.current.off(ACTIONS.CODE_CHANGE);
+    //   }
+    // };
   }, []);
 
   useEffect(() => {

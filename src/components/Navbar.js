@@ -67,7 +67,7 @@ const Navbar = ({socketRef,roomId, editorRef,UsernName}) => {
         </div>
         <div className="m-2 px-2 py-1 ">
          <button
-           className='openModal'
+           className='custom-file-input'
             onClick={handleModal}>
            WhiteBoard
        </button>
