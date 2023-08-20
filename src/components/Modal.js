@@ -8,6 +8,10 @@ const Modal = ({ modalOpen, setmodalOpen, socketRef, roomId }) => {
   const [pencil, setPencil] = useState(true);
   const [clearCanvas, setClearCanvas] = useState(false);
   const [penColor, setPenColor] = useState('#000000');
+  const [cursorStyle, setCursorStyle] = useState(pencil ? 'crosshair' : 'default');
+  const [canvasHistory, setCanvasHistory] = useState([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+
   useEffect(() => {
     if (socketRef.current) {
       socketRef.current.emit(ACTIONS.WHITE_BOARD_SETTINGS, {
@@ -31,6 +35,7 @@ const Modal = ({ modalOpen, setmodalOpen, socketRef, roomId }) => {
       context.strokeStyle = pencil ? penColor : '#ffffff';
       context.lineWidth = 2;
       context.lineCap = 'round';
+      setCursorStyle(pencil ? 'crosshair' : 'default');
     }
   }, [context, pencil,penColor]);
 
@@ -52,10 +57,10 @@ const Modal = ({ modalOpen, setmodalOpen, socketRef, roomId }) => {
     const y = e.nativeEvent.offsetY;
     context.lineTo(x, y);
     context.stroke();
-
     if (socketRef.current) {
       socketRef.current.emit(ACTIONS.DRAW_MOVE, { roomId: roomId, x, y });
     }
+
   };
 
   const handleMouseUp = () => {
@@ -66,6 +71,7 @@ const Modal = ({ modalOpen, setmodalOpen, socketRef, roomId }) => {
       if (socketRef.current) {
         socketRef.current.emit(ACTIONS.DRAW_END, { roomId: roomId });
       }
+
     }
   };
 
@@ -82,6 +88,8 @@ console.log(newColor);
   };
   const handleCanvasReset = () => {
     context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    setCanvasHistory([]);
+     
     if (socketRef.current) {
       socketRef.current.emit(ACTIONS.CLEAR_CANVAS, { roomId: roomId });
     }
@@ -90,7 +98,19 @@ console.log(newColor);
   const clearDrawingHistory = () => {
     context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
   };
-  
+  const updateCanvasFromHistory = () => {
+    if (canvasHistory.length === 0) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const img = new Image();
+    img.src = canvasHistory[historyIndex];
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0);
+    };
+  };
   const handleClose = () => {
     setmodalOpen(false);
     socketRef.current.emit(ACTIONS.CLOSE_WHITE_BOARD, { modalOpen, roomId });
@@ -114,7 +134,6 @@ console.log(newColor);
       if (canvasRef.current) {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
-        console.log('ctx',ctx);
         setContext(ctx);
         if (socketRef.current) {
           socketRef.current.on(ACTIONS.WHITE_BOARD_SETTINGS, ({ roomId, pencil }) => {
@@ -127,7 +146,6 @@ console.log(newColor);
         if (socketRef.current) {
           socketRef.current.on(ACTIONS.DRAW_START, ({ roomId, x, y }) => {
             if (roomId === roomId && context) {
-              console.log('moved');
               context.beginPath();
               context.moveTo(x, y);
             }
@@ -165,7 +183,7 @@ console.log(newColor);
     <div className={`modalBackground active`}>
       <div className={`modalContainer active`}>
         <button className="closeButton" onClick={handleClose}>
-          Close
+        <i className="material-icons">close</i>
         </button>
         <canvas
             ref={canvasRef}
@@ -174,6 +192,7 @@ console.log(newColor);
             onMouseUp={handleMouseUp}
             width={'900px'}
             height={'400px'}
+            style={{cursor:cursorStyle}}
           />
         <div className="canvasContainer">
         <div className="colorPicker">
@@ -197,11 +216,11 @@ console.log(newColor);
         >
           {pencil ? (
             <>
-              <span className="pencilIcon"></span> Pencil
+            <i className="material-symbols-outlined">edit</i>
             </>
           ) : (
             <>
-              <span className="eraserIcon"></span> Eraser
+             <i className="material-symbols-outlined">ink_eraser</i>
             </>
           )}
         </button>

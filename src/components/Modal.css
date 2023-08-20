@@ -50,8 +50,18 @@
     margin-top: 10px;
   }
 .canvasContainer{
+  color: white;
+  border-radius: 10px;
+  background-color: #333;
   display: flex;
   justify-content: space-around;
+  margin:-10px;
+}
+.resetButton{
+  background-color:#007bff;
+  padding: 4px 4px;
+  cursor: pointer;
+  border-radius: 5px;
 }
 .btn-actions{
   display: flex;

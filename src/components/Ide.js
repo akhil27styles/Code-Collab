@@ -172,6 +172,7 @@ console.log(response);
         <div  id="realtimeEditor"></div>
         <div>
     <div className="Console-area">
+      Input-Output-Console
       <div className="split-container">
         <CustomInput customInput={customInput} setCustomInput={setCustomInput} />
         <div className="mid-line"></div>
