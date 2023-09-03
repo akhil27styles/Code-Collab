@@ -1,4 +1,4 @@
-![Alt text](https://ibb.co/gT6nzb0)
+![WhatsApp Image 2023-09-03 at 6 07 20 PM](https://github.com/akhil27styles/Code-Collab/assets/52193850/8c95a71e-3c70-43db-b0e2-f8a90cd34e57)
 
 ![Alt text](https://s11.gifyu.com/images/SgY37.gif)
 # CodeCollab
